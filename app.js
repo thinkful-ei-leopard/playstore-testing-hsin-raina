@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const app = express();
 app.use(morgan('common'));
 
+
 const apps = require('./playstore');
 app.get('/apps', (req, res) => {
   const { sort, genres } = req.query;
@@ -24,23 +25,26 @@ app.get('/apps', (req, res) => {
     }
   }
 
-  let result = apps
-    .filter(app => 
-      app
-        .Genres
-        .includes(genres));
+  // let result = apps
+  //   .filter(app => 
+  //     app
+  //       .Genres
+  //       .includes(genres));
 
   if (sort) {
-    result
+    apps
       .sort((a,b) => {
         return a[sort] > b[sort] ? 1 : a[sort] < b[sort] ? -1 : 0;
       });
   }
 
-  res.json(result);
+  res.json(apps);
 
 });
 
 app.listen(8000, () => {
   console.log('server started on PORT 8000!!');
 });
+
+
+module.exports = app;
